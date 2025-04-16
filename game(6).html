@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexusGaming - Game Catalog</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#6d28d9", secondary: "#4f46e5" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+          background-color: #0f1116;
+          color: #e2e8f0;
+          font-family: 'Rajdhani', sans-serif;
+      }
+      .game-card {
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .game-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 10px 25px rgba(109, 40, 217, 0.3);
+      }
+      .nav-link {
+          position: relative;
+      }
+      .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: -4px;
+          left: 0;
+          background-color: #6d28d9;
+          transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+          width: 100%;
+      }
+      .active-nav::after {
+          width: 100%;
+      }
+      .custom-checkbox {
+          position: relative;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+      }
+      .custom-checkbox input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+      }
+      .checkmark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 20px;
+          width: 20px;
+          background-color: #2d3748;
+          border-radius: 4px;
+          transition: all 0.3s;
+      }
+      .custom-checkbox input:checked ~ .checkmark {
+          background-color: #6d28d9;
+      }
+      .checkmark:after {
+          content: "";
+          position: absolute;
+          display: none;
+      }
+      .custom-checkbox input:checked ~ .checkmark:after {
+          display: block;
+      }
+      .custom-checkbox .checkmark:after {
+          left: 7px;
+          top: 3px;
+          width: 6px;
+          height: 12px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+      }
+      .custom-range {
+          -webkit-appearance: none;
+          width: 100%;
+          height: 8px;
+          border-radius: 5px;
+          background: #2d3748;
+          outline: none;
+      }
+      .custom-range::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #6d28d9;
+          cursor: pointer;
+      }
+      .custom-range::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #6d28d9;
+          cursor: pointer;
+      }
+      .custom-radio {
+          position: relative;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+      }
+      .custom-radio input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+      }
+      .radio-mark {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 20px;
+          width: 20px;
+          background-color: #2d3748;
+          border-radius: 50%;
+      }
+      .custom-radio input:checked ~ .radio-mark {
+          background-color: #2d3748;
+      }
+      .radio-mark:after {
+          content: "";
+          position: absolute;
+          display: none;
+      }
+      .custom-radio input:checked ~ .radio-mark:after {
+          display: block;
+      }
+      .custom-radio .radio-mark:after {
+          top: 5px;
+          left: 5px;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: #6d28d9;
+      }
+      .price-slider {
+          height: 6px;
+          border-radius: 3px;
+          background: #2d3748;
+          position: relative;
+      }
+      .price-slider .progress {
+          height: 100%;
+          position: absolute;
+          border-radius: 3px;
+          background: linear-gradient(90deg, #6d28d9, #4f46e5);
+      }
+      .range-input {
+          position: relative;
+      }
+      .range-input input {
+          position: absolute;
+          top: -6px;
+          height: 6px;
+          width: 100%;
+          background: none;
+          pointer-events: none;
+          -webkit-appearance: none;
+      }
+      .range-input input::-webkit-slider-thumb {
+          height: 18px;
+          width: 18px;
+          border-radius: 50%;
+          background: #6d28d9;
+          pointer-events: auto;
+          -webkit-appearance: none;
+      }
+      .range-input input::-moz-range-thumb {
+          height: 18px;
+          width: 18px;
+          border-radius: 50%;
+          background: #6d28d9;
+          pointer-events: auto;
+          -moz-appearance: none;
+      }
+      .filter-tag {
+          background-color: rgba(109, 40, 217, 0.2);
+          color: #a78bfa;
+          border-radius: 9999px;
+          padding: 0.25rem 0.75rem;
+          font-size: 0.875rem;
+          display: inline-flex;
+          align-items: center;
+          margin-right: 0.5rem;
+          margin-bottom: 0.5rem;
+      }
+      .filter-tag button {
+          margin-left: 0.5rem;
+          color: #a78bfa;
+      }
+      .filter-tag button:hover {
+          color: white;
+      }
+      input:focus, button:focus {
+          outline: none;
+      }
+      .rating-stars i {
+          color: #f59e0b;
+          font-size: 1rem;
+      }
+      .game-progress {
+          height: 6px;
+          border-radius: 3px;
+          background: #2d3748;
+          overflow: hidden;
+      }
+      .progress-bar {
+          height: 100%;
+          background: linear-gradient(90deg, #6d28d9, #4f46e5);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header & Navigation -->
+    <header class="bg-[#0a0c10] fixed w-full z-50 border-b border-gray-800">
+      <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <h1 class="text-3xl font-['Pacifico'] text-primary mr-8">logo</h1>
+            <nav class="hidden md:flex space-x-8">
+              <a
+                href="https://readdy.ai/home/f144490c-af50-4133-bdb2-7f412582fe1a/37f9b796-24d8-403a-a3da-5712defefa14"
+                data-readdy="true"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >Home</a
+              >
+              <a href="#" class="nav-link active-nav text-white font-medium"
+                >Games</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >News</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >Reviews</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >eSports</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >Community</a
+              >
+            </nav>
+          </div>
+          <div class="flex items-center space-x-6">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Search games..."
+                class="bg-gray-800 text-white px-4 py-2 rounded-full w-64 border-none focus:ring-2 focus:ring-primary"
+              />
+              <div
+                class="absolute right-3 top-2.5 w-5 h-5 flex items-center justify-center"
+              >
+                <i class="ri-search-line text-gray-400"></i>
+              </div>
+            </div>
+            <div
+              class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700"
+            >
+              <i class="ri-notification-3-line text-gray-300"></i>
+            </div>
+            <div class="flex items-center space-x-2 cursor-pointer">
+              <div
+                class="w-10 h-10 rounded-full bg-cover bg-center"
+                style="background-image: url('https://readdy.ai/api/search-image?query=gaming%2520profile%2520avatar%252C%2520cyberpunk%2520style%252C%2520neon%2520colors%252C%2520digital%2520art%252C%2520detailed%2520face%252C%2520futuristic&width=100&height=100&seq=1&orientation=squarish')"
+              ></div>
+              <span class="hidden md:inline text-white font-medium"
+                >AlexNightblade</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+      <!-- Page Header -->
+      <section class="bg-[#0a0c10] py-8 border-b border-gray-800">
+        <div class="container mx-auto px-4">
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center"
+          >
+            <div>
+              <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">
+                Game Catalog
+              </h1>
+              <p class="text-gray-400">
+                Discover and explore our extensive collection of PC games
+              </p>
+            </div>
+            <div class="mt-4 md:mt-0 flex items-center space-x-4">
+              <div class="flex items-center space-x-2">
+                <span class="text-gray-400">View:</span>
+                <button
+                  class="w-9 h-9 flex items-center justify-center bg-primary rounded text-white"
+                >
+                  <i class="ri-layout-grid-fill"></i>
+                </button>
+                <button
+                  class="w-9 h-9 flex items-center justify-center bg-gray-800 rounded text-gray-400 hover:bg-gray-700"
+                >
+                  <i class="ri-list-check"></i>
+                </button>
+              </div>
+              <div class="relative">
+                <button
+                  class="flex items-center space-x-2 bg-gray-800 text-white px-4 py-2 rounded-button hover:bg-gray-700 whitespace-nowrap"
+                >
+                  <span>Sort by: Popularity</span>
+                  <i class="ri-arrow-down-s-line"></i>
+                </button>
+                <div
+                  class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg hidden"
+                >
+                  <div class="py-1">
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-white hover:bg-gray-700"
+                      >Popularity</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-white hover:bg-gray-700"
+                      >Release Date</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-white hover:bg-gray-700"
+                      >Price: Low to High</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-white hover:bg-gray-700"
+                      >Price: High to Low</a
+                    >
+                    <a
+                      href="#"
+                      class="block px-4 py-2 text-white hover:bg-gray-700"
+                      >Rating</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+          <!-- Filters Sidebar -->
+          <div class="lg:w-1/4 xl:w-1/5">
+            <div class="bg-gray-800 rounded-lg p-6 sticky top-24">
+              <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-white">Filters</h2>
+                <button class="text-gray-400 hover:text-white text-sm">
+                  Reset All
+                </button>
+              </div>
+
+              <!-- Category Filter -->
+              <div class="mb-6">
+                <h3 class="text-white font-bold mb-3">Categories</h3>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" checked />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">FPS (86)</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">RPG (142)</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Open World (78)</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Strategy (64)</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Simulation (42)</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">MOBA (28)</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Horror (36)</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Adventure (92)</span>
+                  </div>
+                </div>
+                <button
+                  class="text-primary hover:text-primary-dark text-sm mt-2"
+                >
+                  Show more
+                </button>
+              </div>
+
+              <!-- Price Range Filter -->
+              <div class="mb-6">
+                <h3 class="text-white font-bold mb-3">Price Range</h3>
+                <div class="price-range">
+                  <div class="price-slider">
+                    <div class="progress"></div>
+                  </div>
+                  <div class="range-input">
+                    <input
+                      type="range"
+                      class="min-range"
+                      min="0"
+                      max="100"
+                      value="10"
+                      step="1"
+                    />
+                    <input
+                      type="range"
+                      class="max-range"
+                      min="0"
+                      max="100"
+                      value="80"
+                      step="1"
+                    />
+                  </div>
+                  <div class="flex justify-between mt-4">
+                    <div class="bg-gray-700 px-3 py-1 rounded text-white">
+                      $0
+                    </div>
+                    <div class="bg-gray-700 px-3 py-1 rounded text-white">
+                      $80
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Release Date Filter -->
+              <div class="mb-6">
+                <h3 class="text-white font-bold mb-3">Release Date</h3>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <label class="custom-radio">
+                      <input type="radio" name="release-date" checked />
+                      <span class="radio-mark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">All Time</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-radio">
+                      <input type="radio" name="release-date" />
+                      <span class="radio-mark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Last 30 Days</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-radio">
+                      <input type="radio" name="release-date" />
+                      <span class="radio-mark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Last 90 Days</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-radio">
+                      <input type="radio" name="release-date" />
+                      <span class="radio-mark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">This Year</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-radio">
+                      <input type="radio" name="release-date" />
+                      <span class="radio-mark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Coming Soon</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Platform Filter -->
+              <div class="mb-6">
+                <h3 class="text-white font-bold mb-3">Platform</h3>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" checked />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Steam</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Epic Games</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">GOG</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Xbox PC</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Battle.net</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rating Filter -->
+              <div class="mb-6">
+                <h3 class="text-white font-bold mb-3">User Rating</h3>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <div class="ml-2 flex items-center">
+                      <div class="flex">
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" checked />
+                      <span class="checkmark"></span>
+                    </label>
+                    <div class="ml-2 flex items-center">
+                      <div class="flex">
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-line text-yellow-400"></i>
+                      </div>
+                      <span class="text-gray-400 text-sm ml-1">& up</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <div class="ml-2 flex items-center">
+                      <div class="flex">
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-line text-yellow-400"></i>
+                        <i class="ri-star-line text-yellow-400"></i>
+                      </div>
+                      <span class="text-gray-400 text-sm ml-1">& up</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <div class="ml-2 flex items-center">
+                      <div class="flex">
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-fill text-yellow-400"></i>
+                        <i class="ri-star-line text-yellow-400"></i>
+                        <i class="ri-star-line text-yellow-400"></i>
+                        <i class="ri-star-line text-yellow-400"></i>
+                      </div>
+                      <span class="text-gray-400 text-sm ml-1">& up</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Special Offers -->
+              <div class="mb-6">
+                <h3 class="text-white font-bold mb-3">Special Offers</h3>
+                <div class="space-y-2">
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Discounted</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Free to Play</span>
+                  </div>
+                  <div class="flex items-center">
+                    <label class="custom-checkbox">
+                      <input type="checkbox" />
+                      <span class="checkmark"></span>
+                    </label>
+                    <span class="ml-2 text-gray-300">Early Access</span>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                class="w-full bg-primary hover:bg-opacity-90 text-white py-3 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Apply Filters
+              </button>
+            </div>
+          </div>
+
+          <!-- Game Grid -->
+          <div class="lg:w-3/4 xl:w-4/5">
+            <!-- Active Filters -->
+            <div class="mb-6">
+              <div class="flex flex-wrap">
+                <div class="filter-tag">
+                  FPS <button><i class="ri-close-line"></i></button>
+                </div>
+                <div class="filter-tag">
+                  4★ & up <button><i class="ri-close-line"></i></button>
+                </div>
+                <div class="filter-tag">
+                  Steam <button><i class="ri-close-line"></i></button>
+                </div>
+                <div class="filter-tag">
+                  Price: $0 - $80 <button><i class="ri-close-line"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Search Results -->
+            <div class="bg-gray-800 rounded-lg p-4 mb-6">
+              <div class="flex justify-between items-center">
+                <div class="text-gray-300">
+                  <span class="text-white font-bold">86</span> games found
+                </div>
+                <div class="relative">
+                  <input
+                    type="text"
+                    placeholder="Search in results..."
+                    class="bg-gray-700 text-white px-4 py-2 rounded-full w-64 border-none text-sm"
+                  />
+                  <div
+                    class="absolute right-3 top-2 w-5 h-5 flex items-center justify-center"
+                  >
+                    <i class="ri-search-line text-gray-400"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Games Grid -->
+            <div
+              class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              <!-- Game Card 1 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Call%2520of%2520Duty%2520Modern%2520Warfare%2520III%2520game%2520screenshot%252C%2520modern%2520military%2520combat%252C%2520intense%2520action%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=7&orientation=landscape"
+                    alt="Call of Duty: Modern Warfare III"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    Hot
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Call of Duty: MW III
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-half-fill"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">3.8</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Activision</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-primary font-bold">$69.99</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-shopping-cart-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 2 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Counter-Strike%25202%2520game%2520screenshot%252C%2520tactical%2520shooter%252C%2520modern%2520weapons%252C%2520intense%2520firefight%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=6&orientation=landscape"
+                    alt="Counter-Strike 2"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    Competitive
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Counter-Strike 2
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.2</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Valve</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-green-500 font-bold">Free to Play</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-download-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 3 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Valorant%2520game%2520screenshot%252C%2520tactical%2520shooter%252C%2520colorful%2520abilities%252C%2520intense%2520action%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=42&orientation=landscape"
+                    alt="Valorant"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    Competitive
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-purple-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-gamepad-fill text-xs text-purple-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">Valorant</h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-half-fill"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.5</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Riot Games</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-green-500 font-bold">Free to Play</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-download-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 4 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Apex%2520Legends%2520game%2520screenshot%252C%2520battle%2520royale%252C%2520futuristic%2520weapons%252C%2520colorful%2520characters%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=43&orientation=landscape"
+                    alt="Apex Legends"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    Battle Royale
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Apex Legends
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.0</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Respawn</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-green-500 font-bold">Free to Play</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-download-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 5 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Rainbow%2520Six%2520Siege%2520game%2520screenshot%252C%2520tactical%2520shooter%252C%2520special%2520forces%252C%2520destructible%2520environment%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=44&orientation=landscape"
+                    alt="Rainbow Six Siege"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    -60%
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Rainbow Six Siege
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-half-fill"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.6</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Ubisoft</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="text-gray-400 text-sm line-through mr-2"
+                        >$39.99</span
+                      >
+                      <span class="text-primary font-bold">$15.99</span>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-shopping-cart-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 6 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Battlefield%25202042%2520game%2520screenshot%252C%2520large%2520scale%2520warfare%252C%2520futuristic%2520weapons%252C%2520intense%2520action%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=45&orientation=landscape"
+                    alt="Battlefield 2042"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    -50%
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Battlefield 2042
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-line"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">3.2</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">EA DICE</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="text-gray-400 text-sm line-through mr-2"
+                        >$59.99</span
+                      >
+                      <span class="text-primary font-bold">$29.99</span>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-shopping-cart-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 7 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Overwatch%25202%2520game%2520screenshot%252C%2520hero%2520shooter%252C%2520colorful%2520characters%252C%2520abilities%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=46&orientation=landscape"
+                    alt="Overwatch 2"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    Popular
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-blizzard-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">Overwatch 2</h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.1</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Blizzard</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-green-500 font-bold">Free to Play</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-download-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 8 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Destiny%25202%2520game%2520screenshot%252C%2520sci-fi%2520shooter%252C%2520space%2520combat%252C%2520abilities%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=47&orientation=landscape"
+                    alt="Destiny 2"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    MMO
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">Destiny 2</h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.0</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Bungie</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-green-500 font-bold">Free to Play</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-download-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 9 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=DOOM%2520Eternal%2520game%2520screenshot%252C%2520demon%2520slaying%252C%2520intense%2520action%252C%2520hellish%2520environment%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=48&orientation=landscape"
+                    alt="DOOM Eternal"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    -70%
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    DOOM Eternal
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-half-fill"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.7</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">id Software</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="text-gray-400 text-sm line-through mr-2"
+                        >$59.99</span
+                      >
+                      <span class="text-primary font-bold">$17.99</span>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-shopping-cart-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 10 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Halo%2520Infinite%2520game%2520screenshot%252C%2520sci-fi%2520shooter%252C%2520master%2520chief%252C%2520alien%2520world%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=49&orientation=landscape"
+                    alt="Halo Infinite"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    Xbox
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-green-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-xbox-fill text-xs text-green-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Halo Infinite
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.0</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">343 Industries</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-primary font-bold">$59.99</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-shopping-cart-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 11 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Escape%2520from%2520Tarkov%2520game%2520screenshot%252C%2520realistic%2520shooter%252C%2520military%2520equipment%252C%2520tense%2520atmosphere%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=50&orientation=landscape"
+                    alt="Escape from Tarkov"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    Early Access
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-purple-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-gamepad-fill text-xs text-purple-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Escape from Tarkov
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-half-fill"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.5</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">Battlestate</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-primary font-bold">$44.99</span>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-shopping-cart-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game Card 12 -->
+              <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+                <div class="relative">
+                  <img
+                    src="https://readdy.ai/api/search-image?query=Insurgency%2520Sandstorm%2520game%2520screenshot%252C%2520tactical%2520shooter%252C%2520military%2520combat%252C%2520desert%2520environment%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=51&orientation=landscape"
+                    alt="Insurgency: Sandstorm"
+                    class="w-full h-48 object-cover object-top"
+                  />
+                  <div
+                    class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full"
+                  >
+                    -40%
+                  </div>
+                  <div class="absolute top-2 left-2 flex space-x-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                  </div>
+                  <div
+                    class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+                  >
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button font-medium transition-all whitespace-nowrap"
+                    >
+                      Quick View
+                    </button>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-xl font-bold text-white mb-1">
+                    Insurgency: Sandstorm
+                  </h3>
+                  <div class="flex items-center mb-3">
+                    <div class="flex rating-stars">
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-fill"></i>
+                      <i class="ri-star-line"></i>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">4.2</span>
+                  </div>
+                  <div class="flex justify-between items-center mb-3">
+                    <span class="text-gray-300 text-sm">New World</span>
+                    <span class="text-gray-300 text-sm">FPS</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <span class="text-gray-400 text-sm line-through mr-2"
+                        >$29.99</span
+                      >
+                      <span class="text-primary font-bold">$17.99</span>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                      >
+                        <i class="ri-heart-line text-gray-300"></i>
+                      </button>
+                      <button
+                        class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                      >
+                        <i class="ri-shopping-cart-line text-white"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-10 flex justify-center">
+              <div class="flex space-x-2">
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 text-gray-400"
+                >
+                  <i class="ri-arrow-left-s-line"></i>
+                </button>
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-primary rounded-full text-white"
+                >
+                  1
+                </button>
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 text-white"
+                >
+                  2
+                </button>
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 text-white"
+                >
+                  3
+                </button>
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 text-white"
+                >
+                  4
+                </button>
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 text-white"
+                >
+                  5
+                </button>
+                <button
+                  class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 text-gray-400"
+                >
+                  <i class="ri-arrow-right-s-line"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Recently Viewed Games -->
+    <section class="py-12 bg-[#0a0c10]">
+      <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-bold text-white mb-8">Recently Viewed</h2>
+
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-6"
+        >
+          <!-- Game 1 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Cyberpunk%25202077%2520game%2520screenshot%252C%2520futuristic%2520neon%2520city%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520night%2520scene%252C%2520vibrant%2520colors%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=3&orientation=landscape"
+                alt="Cyberpunk 2077"
+                class="w-full h-32 object-cover object-top"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="text-white font-bold mb-1">Cyberpunk 2077</h3>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold">$59.99</span>
+                <button
+                  class="w-7 h-7 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                >
+                  <i class="ri-shopping-cart-line text-white text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 2 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Red%2520Dead%2520Redemption%25202%2520game%2520screenshot%252C%2520wild%2520west%2520landscape%252C%2520sunset%252C%2520cowboy%2520on%2520horseback%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=4&orientation=landscape"
+                alt="Red Dead Redemption 2"
+                class="w-full h-32 object-cover object-top"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="text-white font-bold mb-1">Red Dead Redemption 2</h3>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-gray-400 text-sm line-through mr-2"
+                    >$59.99</span
+                  >
+                  <span class="text-primary font-bold">$35.99</span>
+                </div>
+                <button
+                  class="w-7 h-7 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                >
+                  <i class="ri-shopping-cart-line text-white text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 3 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Elden%2520Ring%2520game%2520screenshot%252C%2520dark%2520fantasy%2520landscape%252C%2520epic%2520boss%2520battle%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=5&orientation=landscape"
+                alt="Elden Ring"
+                class="w-full h-32 object-cover object-top"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="text-white font-bold mb-1">Elden Ring</h3>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold">$69.99</span>
+                <button
+                  class="w-7 h-7 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                >
+                  <i class="ri-shopping-cart-line text-white text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 4 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Counter-Strike%25202%2520game%2520screenshot%252C%2520tactical%2520shooter%252C%2520modern%2520weapons%252C%2520intense%2520firefight%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=6&orientation=landscape"
+                alt="Counter-Strike 2"
+                class="w-full h-32 object-cover object-top"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="text-white font-bold mb-1">Counter-Strike 2</h3>
+              <div class="flex justify-between items-center">
+                <span class="text-green-500 font-bold">Free to Play</span>
+                <button
+                  class="w-7 h-7 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                >
+                  <i class="ri-download-line text-white text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 5 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Call%2520of%2520Duty%2520Modern%2520Warfare%2520III%2520game%2520screenshot%252C%2520modern%2520military%2520combat%252C%2520intense%2520action%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=7&orientation=landscape"
+                alt="Call of Duty: Modern Warfare III"
+                class="w-full h-32 object-cover object-top"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="text-white font-bold mb-1">Call of Duty: MW III</h3>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold">$69.99</span>
+                <button
+                  class="w-7 h-7 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                >
+                  <i class="ri-shopping-cart-line text-white text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game 6 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Valorant%2520game%2520screenshot%252C%2520tactical%2520shooter%252C%2520colorful%2520abilities%252C%2520intense%2520action%252C%2520high%2520quality%252C%2520detailed%2520graphics%252C%2520no%2520text%2520or%2520UI%2520elements&width=400&height=225&seq=42&orientation=landscape"
+                alt="Valorant"
+                class="w-full h-32 object-cover object-top"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="text-white font-bold mb-1">Valorant</h3>
+              <div class="flex justify-between items-center">
+                <span class="text-green-500 font-bold">Free to Play</span>
+                <button
+                  class="w-7 h-7 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                >
+                  <i class="ri-download-line text-white text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#0a0c10] pt-16 pb-8">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+          <div class="lg:col-span-2">
+            <h1 class="text-3xl font-['Pacifico'] text-primary mb-4">logo</h1>
+            <p class="text-gray-400 mb-6">
+              Your ultimate destination for PC gaming news, reviews, guides, and
+              community. Discover the latest games, optimize your setup, and
+              connect with fellow gamers.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-discord-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-twitter-x-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-youtube-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-twitch-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-instagram-fill text-gray-300"></i>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-white font-bold mb-4">Navigation</h3>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="https://readdy.ai/home/f144490c-af50-4133-bdb2-7f412582fe1a/37f9b796-24d8-403a-a3da-5712defefa14"
+                  data-readdy="true"
+                  class="text-gray-400 hover:text-primary"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">Games</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">News</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">Reviews</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">Guides</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Community</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-white font-bold mb-4">Categories</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >FPS Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >RPG Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Strategy Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Open World Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Simulation Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >MOBA Games</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-white font-bold mb-4">Support</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Contact Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">FAQ</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Terms of Service</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Refund Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Cookie Settings</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-800 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="text-gray-500 mb-4 md:mb-0">
+              © 2025 NexusGaming. All rights reserved.
+            </div>
+            <div class="flex space-x-6">
+              <div class="flex items-center">
+                <i class="ri-visa-fill text-gray-400 text-xl mr-2"></i>
+                <i class="ri-mastercard-fill text-gray-400 text-xl mr-2"></i>
+                <i class="ri-paypal-fill text-gray-400 text-xl mr-2"></i>
+                <i class="ri-apple-fill text-gray-400 text-xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <div class="fixed bottom-6 right-6 z-50">
+      <button
+        class="w-12 h-12 flex items-center justify-center bg-primary rounded-full text-white shadow-lg hover:bg-opacity-90"
+      >
+        <i class="ri-arrow-up-line"></i>
+      </button>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Price Range Slider
+        const rangeInput = document.querySelectorAll(".range-input input");
+        const progress = document.querySelector(".price-slider .progress");
+        let minGap = 5;
+
+        rangeInput.forEach((input) => {
+          input.addEventListener("input", (e) => {
+            let minVal = parseInt(rangeInput[0].value);
+            let maxVal = parseInt(rangeInput[1].value);
+
+            if (maxVal - minVal < minGap) {
+              if (e.target.className === "min-range") {
+                rangeInput[0].value = maxVal - minGap;
+              } else {
+                rangeInput[1].value = minVal + minGap;
+              }
+            } else {
+              progress.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+              progress.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+            }
+          });
+        });
+
+        // Initialize price slider
+        const minRange = document.querySelector(".min-range");
+        const maxRange = document.querySelector(".max-range");
+        progress.style.left = (parseInt(minRange.value) / minRange.max) * 100 + "%";
+        progress.style.right =
+          100 - (parseInt(maxRange.value) / maxRange.max) * 100 + "%";
+
+        // Game card hover effect
+        const gameCards = document.querySelectorAll(".game-card");
+        gameCards.forEach((card) => {
+          card.addEventListener("mouseenter", () => {
+            card.classList.add(
+              "transform",
+              "translate-y-[-8px]",
+              "shadow-lg",
+              "shadow-primary/20",
+            );
+          });
+          card.addEventListener("mouseleave", () => {
+            card.classList.remove(
+              "transform",
+              "translate-y-[-8px]",
+              "shadow-lg",
+              "shadow-primary/20",
+            );
+          });
+        });
+
+        // Back to top button
+        const backToTopButton = document.querySelector(
+          ".fixed.bottom-6.right-6 button",
+        );
+        backToTopButton.addEventListener("click", () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        });
+
+        // Filter tags remove
+        const filterTags = document.querySelectorAll(".filter-tag button");
+        filterTags.forEach((button) => {
+          button.addEventListener("click", () => {
+            button.parentElement.remove();
+          });
+        });
+
+        // Wishlist button toggle
+        const wishlistButtons = document.querySelectorAll(".w-8.h-8 .ri-heart-line");
+        wishlistButtons.forEach((button) => {
+          button.addEventListener("click", (e) => {
+            const icon = e.currentTarget;
+            if (icon.classList.contains("ri-heart-line")) {
+              icon.classList.remove("ri-heart-line");
+              icon.classList.add("ri-heart-fill", "text-red-500");
+            } else {
+              icon.classList.remove("ri-heart-fill", "text-red-500");
+              icon.classList.add("ri-heart-line");
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
