@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexusGaming - Ultimate Gaming Community</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: { primary: "#6d28d9", secondary: "#4f46e5" },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+    <style>
+      :where([class^="ri-"])::before { content: "\f3c2"; }
+      body {
+      background-color: #0f1116;
+      color: #e2e8f0;
+      font-family: 'Rajdhani', sans-serif;
+      }
+      .game-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .game-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 25px rgba(109, 40, 217, 0.3);
+      }
+      .category-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .category-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(109, 40, 217, 0.3);
+      }
+      .nav-link {
+      position: relative;
+      }
+      .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: #6d28d9;
+      transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+      width: 100%;
+      }
+      .active-nav::after {
+      width: 100%;
+      }
+      .hero-gradient {
+      background: linear-gradient(to right, rgba(15, 17, 22, 0.9), rgba(15, 17, 22, 0.7), rgba(15, 17, 22, 0.4), rgba(15, 17, 22, 0.1));
+      }
+      .custom-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 30px;
+      }
+      .custom-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      }
+      .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #2d3748;
+      transition: .4s;
+      border-radius: 34px;
+      }
+      .slider:before {
+      position: absolute;
+      content: "";
+      height: 22px;
+      width: 22px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      }
+      input:checked + .slider {
+      background-color: #6d28d9;
+      }
+      input:checked + .slider:before {
+      transform: translateX(30px);
+      }
+      .custom-checkbox {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      }
+      .custom-checkbox input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      }
+      .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background-color: #2d3748;
+      border-radius: 4px;
+      transition: all 0.3s;
+      }
+      .custom-checkbox input:checked ~ .checkmark {
+      background-color: #6d28d9;
+      }
+      .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      }
+      .custom-checkbox input:checked ~ .checkmark:after {
+      display: block;
+      }
+      .custom-checkbox .checkmark:after {
+      left: 7px;
+      top: 3px;
+      width: 6px;
+      height: 12px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+      }
+      .custom-range {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #2d3748;
+      outline: none;
+      }
+      .custom-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #6d28d9;
+      cursor: pointer;
+      }
+      .custom-range::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #6d28d9;
+      cursor: pointer;
+      }
+      .custom-radio {
+      position: relative;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      }
+      .custom-radio input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      }
+      .radio-mark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background-color: #2d3748;
+      border-radius: 50%;
+      }
+      .custom-radio input:checked ~ .radio-mark {
+      background-color: #2d3748;
+      }
+      .radio-mark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      }
+      .custom-radio input:checked ~ .radio-mark:after {
+      display: block;
+      }
+      .custom-radio .radio-mark:after {
+      top: 5px;
+      left: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #6d28d9;
+      }
+      .game-progress {
+      height: 6px;
+      border-radius: 3px;
+      background: #2d3748;
+      overflow: hidden;
+      }
+      .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #6d28d9, #4f46e5);
+      }
+      input:focus, button:focus {
+      outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header & Navigation -->
+    <header class="bg-[#0a0c10] fixed w-full z-50 border-b border-gray-800">
+      <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <h1 class="text-3xl font-['Pacifico'] text-primary mr-8">logo</h1>
+            <nav class="hidden md:flex space-x-8">
+              <a href="#" class="nav-link active-nav text-white font-medium"
+                >Home</a
+              >
+              <a
+                href="https://readdy.ai/home/f144490c-af50-4133-bdb2-7f412582fe1a/562b6bdd-8d80-4233-a663-61b24592a1ed"
+                data-readdy="true"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >Games</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >News</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >Reviews</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >eSports</a
+              >
+              <a
+                href="#"
+                class="nav-link text-gray-300 hover:text-white font-medium"
+                >Community</a
+              >
+            </nav>
+          </div>
+          <div class="flex items-center space-x-6">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Search games..."
+                class="bg-gray-800 text-white px-4 py-2 rounded-full w-64 border-none focus:ring-2 focus:ring-primary"
+              />
+              <div
+                class="absolute right-3 top-2.5 w-5 h-5 flex items-center justify-center"
+              >
+                <i class="ri-search-line text-gray-400"></i>
+              </div>
+            </div>
+            <div
+              class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full cursor-pointer hover:bg-gray-700"
+            >
+              <i class="ri-notification-3-line text-gray-300"></i>
+            </div>
+            <div class="flex items-center space-x-2 cursor-pointer">
+              <div
+                class="w-10 h-10 rounded-full bg-cover bg-center"
+                style="background-image: url('https://readdy.ai/api/search-image?query=gaming%20profile%20avatar%2C%20cyberpunk%20style%2C%20neon%20colors%2C%20digital%20art%2C%20detailed%20face%2C%20futuristic&width=100&height=100&seq=1&orientation=squarish')"
+              ></div>
+              <span class="hidden md:inline text-white font-medium"
+                >AlexNightblade</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Hero Section -->
+    <section
+      class="relative pt-24 min-h-[600px] flex items-center"
+      style="background-image: url('https://readdy.ai/api/search-image?query=dark%20futuristic%20gaming%20setup%20with%20multiple%20monitors%20displaying%20various%20PC%20games%2C%20RGB%20lighting%2C%20gaming%20peripherals%2C%20dramatic%20lighting%2C%20cyberpunk%20aesthetic%2C%20no%20people%2C%20perfect%20for%20a%20gaming%20website%20hero%20background%2C%20high%20quality%20digital%20art&width=1920&height=800&seq=2&orientation=landscape'); background-size: cover; background-position: center;"
+    >
+      <div class="hero-gradient absolute inset-0"></div>
+      <div class="container mx-auto px-4 z-10 py-16">
+        <div class="w-full md:w-1/2 lg:w-2/5">
+          <h1
+            class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white leading-tight"
+          >
+            Elevate Your <span class="text-primary">Gaming</span> Experience
+          </h1>
+          <p class="text-xl text-gray-300 mb-8">
+            Discover the latest PC games, connect with fellow gamers, and stay
+            updated with the gaming world.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a
+              href="https://readdy.ai/home/f144490c-af50-4133-bdb2-7f412582fe1a/ac8a5998-381c-44c3-a5c3-d27f25e8ca24"
+              data-readdy="true"
+            >
+              <button
+                class="bg-primary hover:bg-opacity-90 text-white px-6 py-3 rounded-button font-semibold transition-all flex items-center whitespace-nowrap"
+              >
+                <i class="ri-gamepad-line mr-2"></i> Explore Games
+              </button>
+            </a>
+            <button
+              class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-button font-semibold transition-all flex items-center whitespace-nowrap"
+            >
+              <i class="ri-live-line mr-2"></i> Live Streams
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Featured PC Games -->
+    <section class="py-16 bg-[#0f1116]">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-10">
+          <h2 class="text-3xl font-bold text-white">Featured PC Games</h2>
+          <div class="flex space-x-2">
+            <button
+              class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+            >
+              <i class="ri-arrow-left-s-line text-white"></i>
+            </button>
+            <button
+              class="w-10 h-10 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+            >
+              <i class="ri-arrow-right-s-line text-white"></i>
+            </button>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+        >
+          <!-- Game Card 1 -->
+          <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Cyberpunk%202077%20game%20screenshot%2C%20futuristic%20neon%20city%2C%20high%20quality%2C%20detailed%20graphics%2C%20night%20scene%2C%20vibrant%20colors%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=3&orientation=landscape"
+                alt="Cyberpunk 2077"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-2 right-2 bg-primary text-white text-xs px-2 py-1 rounded-full"
+              >
+                New DLC
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-white mb-1">Cyberpunk 2077</h3>
+              <div class="flex items-center mb-3">
+                <div class="flex">
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-half-fill text-yellow-400"></i>
+                </div>
+                <span class="text-gray-400 text-sm ml-2">4.5</span>
+              </div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-300 text-sm">CD Projekt Red</span>
+                <span class="text-gray-300 text-sm">RPG</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold">$59.99</span>
+                <div class="flex space-x-2">
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                  >
+                    <i class="ri-information-line text-gray-300"></i>
+                  </button>
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                  >
+                    <i class="ri-shopping-cart-line text-white"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Game Card 2 -->
+          <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Red%20Dead%20Redemption%202%20game%20screenshot%2C%20wild%20west%20landscape%2C%20sunset%2C%20cowboy%20on%20horseback%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=4&orientation=landscape"
+                alt="Red Dead Redemption 2"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full"
+              >
+                -40%
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-white mb-1">
+                Red Dead Redemption 2
+              </h3>
+              <div class="flex items-center mb-3">
+                <div class="flex">
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                </div>
+                <span class="text-gray-400 text-sm ml-2">4.9</span>
+              </div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-300 text-sm">Rockstar Games</span>
+                <span class="text-gray-300 text-sm">Open World</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div>
+                  <span class="text-gray-400 text-sm line-through mr-2"
+                    >$59.99</span
+                  >
+                  <span class="text-primary font-bold">$35.99</span>
+                </div>
+                <div class="flex space-x-2">
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                  >
+                    <i class="ri-information-line text-gray-300"></i>
+                  </button>
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                  >
+                    <i class="ri-shopping-cart-line text-white"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Game Card 3 -->
+          <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Elden%20Ring%20game%20screenshot%2C%20dark%20fantasy%20landscape%2C%20epic%20boss%20battle%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=5&orientation=landscape"
+                alt="Elden Ring"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full"
+              >
+                Popular
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-white mb-1">Elden Ring</h3>
+              <div class="flex items-center mb-3">
+                <div class="flex">
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-half-fill text-yellow-400"></i>
+                </div>
+                <span class="text-gray-400 text-sm ml-2">4.7</span>
+              </div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-300 text-sm">FromSoftware</span>
+                <span class="text-gray-300 text-sm">Action RPG</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold">$69.99</span>
+                <div class="flex space-x-2">
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                  >
+                    <i class="ri-information-line text-gray-300"></i>
+                  </button>
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                  >
+                    <i class="ri-shopping-cart-line text-white"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Game Card 4 -->
+          <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Counter-Strike%202%20game%20screenshot%2C%20tactical%20shooter%2C%20modern%20weapons%2C%20intense%20firefight%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=6&orientation=landscape"
+                alt="Counter-Strike 2"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-2 right-2 bg-blue-500 text-white text-xs px-2 py-1 rounded-full"
+              >
+                Competitive
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-white mb-1">
+                Counter-Strike 2
+              </h3>
+              <div class="flex items-center mb-3">
+                <div class="flex">
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-line text-yellow-400"></i>
+                </div>
+                <span class="text-gray-400 text-sm ml-2">4.2</span>
+              </div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-300 text-sm">Valve</span>
+                <span class="text-gray-300 text-sm">FPS</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-green-500 font-bold">Free to Play</span>
+                <div class="flex space-x-2">
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                  >
+                    <i class="ri-information-line text-gray-300"></i>
+                  </button>
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                  >
+                    <i class="ri-download-line text-white"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Game Card 5 -->
+          <div class="game-card bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Call%20of%20Duty%20Modern%20Warfare%20III%20game%20screenshot%2C%20modern%20military%20combat%2C%20intense%20action%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=7&orientation=landscape"
+                alt="Call of Duty: Modern Warfare III"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full"
+              >
+                Hot
+              </div>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold text-white mb-1">
+                Call of Duty: MW III
+              </h3>
+              <div class="flex items-center mb-3">
+                <div class="flex">
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-fill text-yellow-400"></i>
+                  <i class="ri-star-half-fill text-yellow-400"></i>
+                  <i class="ri-star-line text-yellow-400"></i>
+                </div>
+                <span class="text-gray-400 text-sm ml-2">3.8</span>
+              </div>
+              <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-300 text-sm">Activision</span>
+                <span class="text-gray-300 text-sm">FPS</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-primary font-bold">$69.99</span>
+                <div class="flex space-x-2">
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-full hover:bg-gray-600"
+                  >
+                    <i class="ri-information-line text-gray-300"></i>
+                  </button>
+                  <button
+                    class="w-8 h-8 flex items-center justify-center bg-primary rounded-full hover:bg-opacity-90"
+                  >
+                    <i class="ri-shopping-cart-line text-white"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center mt-10">
+          <button
+            class="bg-gray-800 hover:bg-gray-700 text-white px-6 py-3 rounded-button font-semibold transition-all flex items-center whitespace-nowrap"
+          >
+            <i class="ri-game-line mr-2"></i> View All Games
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Categories Section -->
+    <section class="py-16 bg-[#0a0c10]">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white mb-10">Popular Categories</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+          <!-- Category 1 -->
+          <div class="category-card bg-gray-800 rounded-lg p-6 text-center">
+            <div
+              class="w-16 h-16 mx-auto mb-4 bg-primary bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <i class="ri-sword-line text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">FPS</h3>
+            <p class="text-gray-400 text-sm">246 Games</p>
+            <div class="mt-3 text-xs text-primary font-medium">Trending</div>
+          </div>
+          <!-- Category 2 -->
+          <div class="category-card bg-gray-800 rounded-lg p-6 text-center">
+            <div
+              class="w-16 h-16 mx-auto mb-4 bg-secondary bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <i class="ri-gamepad-line text-secondary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">RPG</h3>
+            <p class="text-gray-400 text-sm">189 Games</p>
+          </div>
+          <!-- Category 3 -->
+          <div class="category-card bg-gray-800 rounded-lg p-6 text-center">
+            <div
+              class="w-16 h-16 mx-auto mb-4 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <i class="ri-chess-line text-green-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Strategy</h3>
+            <p class="text-gray-400 text-sm">124 Games</p>
+          </div>
+          <!-- Category 4 -->
+          <div class="category-card bg-gray-800 rounded-lg p-6 text-center">
+            <div
+              class="w-16 h-16 mx-auto mb-4 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <i class="ri-earth-line text-yellow-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Open World</h3>
+            <p class="text-gray-400 text-sm">157 Games</p>
+            <div class="mt-3 text-xs text-primary font-medium">Trending</div>
+          </div>
+          <!-- Category 5 -->
+          <div class="category-card bg-gray-800 rounded-lg p-6 text-center">
+            <div
+              class="w-16 h-16 mx-auto mb-4 bg-blue-500 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <i class="ri-steering-2-line text-blue-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">Simulation</h3>
+            <p class="text-gray-400 text-sm">93 Games</p>
+          </div>
+          <!-- Category 6 -->
+          <div class="category-card bg-gray-800 rounded-lg p-6 text-center">
+            <div
+              class="w-16 h-16 mx-auto mb-4 bg-red-500 bg-opacity-20 rounded-full flex items-center justify-center"
+            >
+              <i class="ri-sword-fill text-red-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">MOBA</h3>
+            <p class="text-gray-400 text-sm">78 Games</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- System Requirements Checker -->
+    <section class="py-16 bg-[#0f1116]">
+      <div class="container mx-auto px-4">
+        <div class="bg-gray-800 rounded-lg p-8">
+          <div
+            class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8"
+          >
+            <div>
+              <h2 class="text-3xl font-bold text-white mb-2">
+                System Requirements Checker
+              </h2>
+              <p class="text-gray-400">
+                Check if your PC can run the latest games
+              </p>
+            </div>
+            <div class="mt-4 lg:mt-0">
+              <button
+                class="bg-primary hover:bg-opacity-90 text-white px-6 py-3 rounded-button font-semibold transition-all flex items-center whitespace-nowrap"
+              >
+                <i class="ri-cpu-line mr-2"></i> Scan My PC
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Game Selection -->
+            <div class="bg-gray-900 rounded-lg p-6">
+              <h3 class="text-xl font-bold text-white mb-4">Select a Game</h3>
+              <div class="relative mb-4">
+                <input
+                  type="text"
+                  placeholder="Search games..."
+                  class="w-full bg-gray-800 text-white px-4 py-3 rounded border-none"
+                />
+                <div
+                  class="absolute right-3 top-3 w-5 h-5 flex items-center justify-center"
+                >
+                  <i class="ri-search-line text-gray-400"></i>
+                </div>
+              </div>
+              <div class="space-y-3 max-h-[300px] overflow-y-auto pr-2">
+                <div
+                  class="flex items-center p-3 bg-gray-800 rounded hover:bg-gray-700 cursor-pointer"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=Cyberpunk%202077%20logo%2C%20simple%2C%20clean&width=100&height=100&seq=8&orientation=squarish')"
+                  ></div>
+                  <span class="text-white">Cyberpunk 2077</span>
+                </div>
+                <div
+                  class="flex items-center p-3 bg-primary bg-opacity-20 rounded cursor-pointer"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=Elden%20Ring%20logo%2C%20simple%2C%20clean&width=100&height=100&seq=9&orientation=squarish')"
+                  ></div>
+                  <span class="text-primary font-medium">Elden Ring</span>
+                </div>
+                <div
+                  class="flex items-center p-3 bg-gray-800 rounded hover:bg-gray-700 cursor-pointer"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=Red%20Dead%20Redemption%202%20logo%2C%20simple%2C%20clean&width=100&height=100&seq=10&orientation=squarish')"
+                  ></div>
+                  <span class="text-white">Red Dead Redemption 2</span>
+                </div>
+                <div
+                  class="flex items-center p-3 bg-gray-800 rounded hover:bg-gray-700 cursor-pointer"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=Call%20of%20Duty%20Modern%20Warfare%20logo%2C%20simple%2C%20clean&width=100&height=100&seq=11&orientation=squarish')"
+                  ></div>
+                  <span class="text-white">Call of Duty: MW III</span>
+                </div>
+                <div
+                  class="flex items-center p-3 bg-gray-800 rounded hover:bg-gray-700 cursor-pointer"
+                >
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=Counter-Strike%202%20logo%2C%20simple%2C%20clean&width=100&height=100&seq=12&orientation=squarish')"
+                  ></div>
+                  <span class="text-white">Counter-Strike 2</span>
+                </div>
+              </div>
+            </div>
+            <!-- Requirements -->
+            <div class="bg-gray-900 rounded-lg p-6">
+              <h3 class="text-xl font-bold text-white mb-4">
+                Elden Ring Requirements
+              </h3>
+              <div class="flex mb-4">
+                <button
+                  class="flex-1 py-2 text-center bg-primary text-white rounded-full rounded-r-none"
+                >
+                  Minimum
+                </button>
+                <button
+                  class="flex-1 py-2 text-center bg-gray-800 text-gray-300 rounded-full rounded-l-none"
+                >
+                  Recommended
+                </button>
+              </div>
+              <div class="space-y-4">
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-400">OS</span>
+                    <span class="text-white">Windows 10</span>
+                  </div>
+                  <div class="game-progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-400">CPU</span>
+                    <span class="text-white">Intel Core i5-8400</span>
+                  </div>
+                  <div class="game-progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-400">RAM</span>
+                    <span class="text-white">12 GB</span>
+                  </div>
+                  <div class="game-progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-400">GPU</span>
+                    <span class="text-white">NVIDIA GTX 1060 3GB</span>
+                  </div>
+                  <div class="game-progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-400">DirectX</span>
+                    <span class="text-white">Version 12</span>
+                  </div>
+                  <div class="game-progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1">
+                    <span class="text-gray-400">Storage</span>
+                    <span class="text-white">60 GB</span>
+                  </div>
+                  <div class="game-progress">
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Your PC -->
+            <div class="bg-gray-900 rounded-lg p-6">
+              <h3 class="text-xl font-bold text-white mb-4">Your PC Specs</h3>
+              <div class="bg-green-500 bg-opacity-20 p-4 rounded-lg mb-6">
+                <div class="flex items-center">
+                  <div
+                    class="w-10 h-10 flex items-center justify-center bg-green-500 rounded-full mr-3"
+                  >
+                    <i class="ri-check-line text-white"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-green-500 font-bold">Compatible</h4>
+                    <p class="text-gray-300 text-sm">
+                      Your PC meets the requirements
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">OS</span>
+                  <span class="text-white">Windows 11 Pro</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">CPU</span>
+                  <span class="text-white">Intel Core i7-11700K</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">RAM</span>
+                  <span class="text-white">32 GB DDR4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">GPU</span>
+                  <span class="text-white">NVIDIA RTX 3080</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">DirectX</span>
+                  <span class="text-white">Version 12</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">Storage</span>
+                  <span class="text-white">1 TB SSD</span>
+                </div>
+              </div>
+              <button
+                class="w-full bg-gray-800 hover:bg-gray-700 text-white mt-6 py-3 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Update My Specs
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Game Deals Section -->
+    <section class="py-16 bg-[#0a0c10]">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-10">
+          <h2 class="text-3xl font-bold text-white">Hot Deals</h2>
+          <a
+            href="#"
+            class="text-primary hover:text-primary-dark flex items-center"
+          >
+            View all deals <i class="ri-arrow-right-line ml-2"></i>
+          </a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Deal 1 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Assassins%20Creed%20Valhalla%20game%20screenshot%2C%20viking%20warrior%2C%20epic%20landscape%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=13&orientation=landscape"
+                alt="Assassin's Creed Valhalla"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-3 left-3 right-3 flex justify-between items-end"
+              >
+                <div>
+                  <h3 class="text-white font-bold">
+                    Assassin's Creed Valhalla
+                  </h3>
+                  <div class="flex mt-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-purple-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-gamepad-fill text-xs text-purple-400"></i>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-green-500 text-white text-lg font-bold px-3 py-1 rounded"
+                >
+                  -70%
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-3">
+                <div>
+                  <span class="text-gray-400 text-sm line-through mr-2"
+                    >$59.99</span
+                  >
+                  <span class="text-primary font-bold">$17.99</span>
+                </div>
+                <div
+                  class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded"
+                >
+                  Ends in 2d 14h
+                </div>
+              </div>
+              <button
+                class="w-full bg-primary hover:bg-opacity-90 text-white py-2 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          <!-- Deal 2 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=The%20Witcher%203%20game%20screenshot%2C%20fantasy%20landscape%2C%20monster%20hunter%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=14&orientation=landscape"
+                alt="The Witcher 3"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-3 left-3 right-3 flex justify-between items-end"
+              >
+                <div>
+                  <h3 class="text-white font-bold">The Witcher 3: Wild Hunt</h3>
+                  <div class="flex mt-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-green-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-xbox-fill text-xs text-green-400"></i>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-green-500 text-white text-lg font-bold px-3 py-1 rounded"
+                >
+                  -80%
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-3">
+                <div>
+                  <span class="text-gray-400 text-sm line-through mr-2"
+                    >$39.99</span
+                  >
+                  <span class="text-primary font-bold">$7.99</span>
+                </div>
+                <div
+                  class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded"
+                >
+                  Ends in 1d 8h
+                </div>
+              </div>
+              <button
+                class="w-full bg-primary hover:bg-opacity-90 text-white py-2 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          <!-- Deal 3 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Horizon%20Zero%20Dawn%20game%20screenshot%2C%20robot%20dinosaurs%2C%20post-apocalyptic%20landscape%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=15&orientation=landscape"
+                alt="Horizon Zero Dawn"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-3 left-3 right-3 flex justify-between items-end"
+              >
+                <div>
+                  <h3 class="text-white font-bold">Horizon Zero Dawn</h3>
+                  <div class="flex mt-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-gray-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-playstation-fill text-xs text-gray-400"></i>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-green-500 text-white text-lg font-bold px-3 py-1 rounded"
+                >
+                  -60%
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-3">
+                <div>
+                  <span class="text-gray-400 text-sm line-through mr-2"
+                    >$49.99</span
+                  >
+                  <span class="text-primary font-bold">$19.99</span>
+                </div>
+                <div
+                  class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded"
+                >
+                  Ends in 3d 22h
+                </div>
+              </div>
+              <button
+                class="w-full bg-primary hover:bg-opacity-90 text-white py-2 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          <!-- Deal 4 -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=Resident%20Evil%20Village%20game%20screenshot%2C%20horror%20mansion%2C%20gothic%20architecture%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=400&height=225&seq=16&orientation=landscape"
+                alt="Resident Evil Village"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900 to-transparent"
+              ></div>
+              <div
+                class="absolute bottom-3 left-3 right-3 flex justify-between items-end"
+              >
+                <div>
+                  <h3 class="text-white font-bold">Resident Evil Village</h3>
+                  <div class="flex mt-1">
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-blue-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-steam-fill text-xs text-blue-400"></i>
+                    </div>
+                    <div
+                      class="w-6 h-6 flex items-center justify-center bg-purple-500 bg-opacity-30 rounded-full mr-1"
+                    >
+                      <i class="ri-gamepad-fill text-xs text-purple-400"></i>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-green-500 text-white text-lg font-bold px-3 py-1 rounded"
+                >
+                  -50%
+                </div>
+              </div>
+            </div>
+            <div class="p-4">
+              <div class="flex justify-between items-center mb-3">
+                <div>
+                  <span class="text-gray-400 text-sm line-through mr-2"
+                    >$59.99</span
+                  >
+                  <span class="text-primary font-bold">$29.99</span>
+                </div>
+                <div
+                  class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded"
+                >
+                  Ends in 5d 6h
+                </div>
+              </div>
+              <button
+                class="w-full bg-primary hover:bg-opacity-90 text-white py-2 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- eSports Section -->
+    <section class="py-16 bg-[#0f1116]">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center mb-10">
+          <h2 class="text-3xl font-bold text-white">eSports Corner</h2>
+          <div class="flex space-x-4">
+            <button
+              class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap"
+            >
+              Upcoming
+            </button>
+            <button
+              class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap"
+            >
+              Live Now
+            </button>
+            <button
+              class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap"
+            >
+              Results
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Live Tournaments -->
+          <div class="col-span-2">
+            <div class="bg-gray-800 rounded-lg overflow-hidden">
+              <div class="relative">
+                <img
+                  src="https://readdy.ai/api/search-image?query=esports%20tournament%20arena%2C%20large%20crowd%2C%20professional%20gaming%20stage%2C%20dramatic%20lighting%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=800&height=400&seq=17&orientation=landscape"
+                  alt="ESL Pro League"
+                  class="w-full h-80 object-cover object-top"
+                />
+                <div
+                  class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900 to-transparent"
+                ></div>
+                <div
+                  class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full flex items-center"
+                >
+                  <div
+                    class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"
+                  ></div>
+                  LIVE
+                </div>
+                <div class="absolute bottom-4 left-4 right-4">
+                  <h3 class="text-2xl font-bold text-white mb-2">
+                    ESL Pro League Season 17
+                  </h3>
+                  <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                      <div
+                        class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                        style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional&width=100&height=100&seq=18&orientation=squarish')"
+                      ></div>
+                      <span class="text-white font-medium">FaZe Clan</span>
+                      <span class="text-white mx-3 font-bold">VS</span>
+                      <div
+                        class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                        style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20different%20from%20previous%2C%20simple%2C%20clean%2C%20professional&width=100&height=100&seq=19&orientation=squarish')"
+                      ></div>
+                      <span class="text-white font-medium">Team Liquid</span>
+                    </div>
+                    <div
+                      class="bg-gray-900 bg-opacity-80 text-white px-3 py-1 rounded"
+                    >
+                      <span class="text-xl font-bold">1 - 1</span>
+                    </div>
+                  </div>
+                  <div class="mt-4 flex justify-between">
+                    <div class="flex items-center text-gray-300 text-sm">
+                      <i class="ri-group-line mr-2"></i>
+                      <span>124,568 viewers</span>
+                    </div>
+                    <button
+                      class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button text-sm font-medium transition-all flex items-center whitespace-nowrap"
+                    >
+                      <i class="ri-live-line mr-2"></i> Watch Now
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <!-- Upcoming Match 1 -->
+              <div class="bg-gray-800 rounded-lg p-4">
+                <div class="flex justify-between items-center mb-4">
+                  <div class="flex items-center">
+                    <div
+                      class="w-8 h-8 rounded bg-cover bg-center mr-2"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=Valorant%20game%20logo%2C%20simple%2C%20clean&width=100&height=100&seq=20&orientation=squarish')"
+                    ></div>
+                    <span class="text-white font-medium">Valorant</span>
+                  </div>
+                  <div class="text-gray-400 text-sm">VCT Americas</div>
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <div class="flex items-center">
+                    <div
+                      class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional%2C%20different%20from%20previous&width=100&height=100&seq=21&orientation=squarish')"
+                    ></div>
+                    <span class="text-white">Sentinels</span>
+                  </div>
+                  <span class="text-gray-400 font-bold">VS</span>
+                  <div class="flex items-center">
+                    <span class="text-white text-right">Cloud9</span>
+                    <div
+                      class="w-10 h-10 rounded bg-cover bg-center ml-3"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20blue%20theme%2C%20cloud%20concept%2C%20simple%2C%20clean%2C%20professional&width=100&height=100&seq=22&orientation=squarish')"
+                    ></div>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <div class="text-gray-300 text-sm">
+                    <i class="ri-time-line mr-1"></i> Tomorrow, 19:00
+                  </div>
+                  <button
+                    class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-button text-sm font-medium transition-all whitespace-nowrap"
+                  >
+                    Set Reminder
+                  </button>
+                </div>
+              </div>
+              <!-- Upcoming Match 2 -->
+              <div class="bg-gray-800 rounded-lg p-4">
+                <div class="flex justify-between items-center mb-4">
+                  <div class="flex items-center">
+                    <div
+                      class="w-8 h-8 rounded bg-cover bg-center mr-2"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=League%20of%20Legends%20game%20logo%2C%20simple%2C%20clean&width=100&height=100&seq=23&orientation=squarish')"
+                    ></div>
+                    <span class="text-white font-medium"
+                      >League of Legends</span
+                    >
+                  </div>
+                  <div class="text-gray-400 text-sm">LCS Spring</div>
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                  <div class="flex items-center">
+                    <div
+                      class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional%2C%20different%20from%20all%20previous&width=100&height=100&seq=24&orientation=squarish')"
+                    ></div>
+                    <span class="text-white">Team SoloMid</span>
+                  </div>
+                  <span class="text-gray-400 font-bold">VS</span>
+                  <div class="flex items-center">
+                    <span class="text-white text-right">100 Thieves</span>
+                    <div
+                      class="w-10 h-10 rounded bg-cover bg-center ml-3"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20red%20and%20black%20theme%2C%20simple%2C%20clean%2C%20professional&width=100&height=100&seq=25&orientation=squarish')"
+                    ></div>
+                  </div>
+                </div>
+                <div class="flex justify-between items-center">
+                  <div class="text-gray-300 text-sm">
+                    <i class="ri-time-line mr-1"></i> Apr 16, 20:00
+                  </div>
+                  <button
+                    class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-button text-sm font-medium transition-all whitespace-nowrap"
+                  >
+                    Set Reminder
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Tournament Rankings -->
+          <div>
+            <div class="bg-gray-800 rounded-lg p-6">
+              <h3 class="text-xl font-bold text-white mb-6">
+                Tournament Rankings
+              </h3>
+              <div class="flex mb-4">
+                <button
+                  class="flex-1 py-2 text-center bg-primary text-white rounded-full rounded-r-none"
+                >
+                  CS2
+                </button>
+                <button
+                  class="flex-1 py-2 text-center bg-gray-700 text-gray-300 rounded-full rounded-l-none"
+                >
+                  Valorant
+                </button>
+              </div>
+              <div class="space-y-4">
+                <!-- Team 1 -->
+                <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-primary rounded-full mr-3 font-bold text-white text-sm"
+                  >
+                    1
+                  </div>
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional%2C%20different%20from%20all%20previous&width=100&height=100&seq=26&orientation=squarish')"
+                  ></div>
+                  <div class="flex-1">
+                    <h4 class="text-white font-medium">FaZe Clan</h4>
+                    <div class="text-gray-400 text-xs">Points: 1250</div>
+                  </div>
+                  <div class="text-green-500 font-bold">+2</div>
+                </div>
+                <!-- Team 2 -->
+                <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-gray-600 rounded-full mr-3 font-bold text-white text-sm"
+                  >
+                    2
+                  </div>
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional%2C%20different%20from%20all%20previous&width=100&height=100&seq=27&orientation=squarish')"
+                  ></div>
+                  <div class="flex-1">
+                    <h4 class="text-white font-medium">Team Vitality</h4>
+                    <div class="text-gray-400 text-xs">Points: 1150</div>
+                  </div>
+                  <div class="text-red-500 font-bold">-1</div>
+                </div>
+                <!-- Team 3 -->
+                <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-gray-600 rounded-full mr-3 font-bold text-white text-sm"
+                  >
+                    3
+                  </div>
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional%2C%20different%20from%20all%20previous&width=100&height=100&seq=28&orientation=squarish')"
+                  ></div>
+                  <div class="flex-1">
+                    <h4 class="text-white font-medium">NAVI</h4>
+                    <div class="text-gray-400 text-xs">Points: 1080</div>
+                  </div>
+                  <div class="text-red-500 font-bold">-1</div>
+                </div>
+                <!-- Team 4 -->
+                <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-gray-600 rounded-full mr-3 font-bold text-white text-sm"
+                  >
+                    4
+                  </div>
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional%2C%20different%20from%20all%20previous&width=100&height=100&seq=29&orientation=squarish')"
+                  ></div>
+                  <div class="flex-1">
+                    <h4 class="text-white font-medium">Team Liquid</h4>
+                    <div class="text-gray-400 text-xs">Points: 950</div>
+                  </div>
+                  <div class="text-green-500 font-bold">+1</div>
+                </div>
+                <!-- Team 5 -->
+                <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                  <div
+                    class="w-6 h-6 flex items-center justify-center bg-gray-600 rounded-full mr-3 font-bold text-white text-sm"
+                  >
+                    5
+                  </div>
+                  <div
+                    class="w-10 h-10 rounded bg-cover bg-center mr-3"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=esports%20team%20logo%2C%20simple%2C%20clean%2C%20professional%2C%20different%20from%20all%20previous&width=100&height=100&seq=30&orientation=squarish')"
+                  ></div>
+                  <div class="flex-1">
+                    <h4 class="text-white font-medium">G2 Esports</h4>
+                    <div class="text-gray-400 text-xs">Points: 920</div>
+                  </div>
+                  <div class="text-green-500 font-bold">+3</div>
+                </div>
+              </div>
+              <button
+                class="w-full bg-gray-700 hover:bg-gray-600 text-white mt-6 py-3 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                View Full Rankings
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Gaming Community Section -->
+    <section class="py-16 bg-[#0a0c10]">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white mb-10">Gaming Community</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Community Stats -->
+          <div class="bg-gray-800 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-white mb-6">Community Stats</h3>
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-gray-400">Active Members</span>
+                  <span class="text-white font-bold">24,892</span>
+                </div>
+                <div class="game-progress">
+                  <div class="progress-bar" style="width: 85%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-gray-400">Online Now</span>
+                  <span class="text-white font-bold">4,217</span>
+                </div>
+                <div class="game-progress">
+                  <div class="progress-bar" style="width: 65%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-gray-400">Guides Published</span>
+                  <span class="text-white font-bold">1,358</span>
+                </div>
+                <div class="game-progress">
+                  <div class="progress-bar" style="width: 45%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-gray-400">PC Builds Shared</span>
+                  <span class="text-white font-bold">892</span>
+                </div>
+                <div class="game-progress">
+                  <div class="progress-bar" style="width: 30%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6">
+              <button
+                class="w-full bg-primary hover:bg-opacity-90 text-white py-3 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Join Community
+              </button>
+            </div>
+          </div>
+          <!-- Featured PC Build -->
+          <div class="bg-gray-800 rounded-lg overflow-hidden">
+            <div class="relative">
+              <img
+                src="https://readdy.ai/api/search-image?query=high-end%20gaming%20PC%20build%2C%20RGB%20lighting%2C%20custom%20water%20cooling%2C%20glass%20case%2C%20dramatic%20lighting%2C%20high%20quality%2C%20detailed%20graphics%2C%20no%20text%20or%20UI%20elements&width=600&height=400&seq=31&orientation=landscape"
+                alt="Featured PC Build"
+                class="w-full h-48 object-cover object-top"
+              />
+              <div
+                class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-gray-900 to-transparent"
+              ></div>
+              <div class="absolute bottom-3 left-3">
+                <h3 class="text-white font-bold">Featured PC Build</h3>
+              </div>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-bold text-white mb-2">
+                "Phantom Eclipse" by DarkByte
+              </h4>
+              <div class="space-y-2 mb-4">
+                <div class="flex justify-between">
+                  <span class="text-gray-400">CPU</span>
+                  <span class="text-white">AMD Ryzen 9 7950X</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">GPU</span>
+                  <span class="text-white">NVIDIA RTX 4090</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">RAM</span>
+                  <span class="text-white">64GB DDR5-6000</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-400">Cooling</span>
+                  <span class="text-white">Custom Loop</span>
+                </div>
+              </div>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                  <div
+                    class="w-8 h-8 rounded-full bg-cover bg-center mr-2"
+                    style="background-image: url('https://readdy.ai/api/search-image?query=gaming%20profile%20avatar%2C%20cyberpunk%20style%2C%20neon%20colors%2C%20digital%20art%2C%20detailed%20face%2C%20futuristic%2C%20different%20from%20previous&width=100&height=100&seq=32&orientation=squarish')"
+                  ></div>
+                  <span class="text-gray-300 text-sm">DarkByte</span>
+                </div>
+                <button
+                  class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-button text-sm font-medium transition-all whitespace-nowrap"
+                >
+                  View Details
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Latest Guides -->
+          <div class="bg-gray-800 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-white mb-6">Latest Guides</h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div
+                  class="w-12 h-12 rounded bg-cover bg-center mr-3 flex-shrink-0"
+                  style="background-image: url('https://readdy.ai/api/search-image?query=Cyberpunk%202077%20game%20icon%2C%20simple%2C%20clean&width=100&height=100&seq=33&orientation=squarish')"
+                ></div>
+                <div>
+                  <h4 class="text-white font-medium">
+                    Cyberpunk 2077: Ultimate Build Guide
+                  </h4>
+                  <div class="flex items-center mt-1">
+                    <div
+                      class="w-5 h-5 rounded-full bg-cover bg-center mr-1"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=gaming%20profile%20avatar%2C%20cyberpunk%20style%2C%20neon%20colors%2C%20digital%20art%2C%20detailed%20face%2C%20futuristic%2C%20different%20from%20all%20previous&width=100&height=100&seq=34&orientation=squarish')"
+                    ></div>
+                    <span class="text-gray-400 text-xs">CyberNinja</span>
+                    <span class="text-gray-500 text-xs mx-2">•</span>
+                    <span class="text-gray-400 text-xs">2 days ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-12 h-12 rounded bg-cover bg-center mr-3 flex-shrink-0"
+                  style="background-image: url('https://readdy.ai/api/search-image?query=Elden%20Ring%20game%20icon%2C%20simple%2C%20clean&width=100&height=100&seq=35&orientation=squarish')"
+                ></div>
+                <div>
+                  <h4 class="text-white font-medium">
+                    Elden Ring: Malenia Boss Fight Strategy
+                  </h4>
+                  <div class="flex items-center mt-1">
+                    <div
+                      class="w-5 h-5 rounded-full bg-cover bg-center mr-1"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=gaming%20profile%20avatar%2C%20fantasy%20style%2C%20digital%20art%2C%20detailed%20face%2C%20different%20from%20all%20previous&width=100&height=100&seq=36&orientation=squarish')"
+                    ></div>
+                    <span class="text-gray-400 text-xs">TarnishedOne</span>
+                    <span class="text-gray-500 text-xs mx-2">•</span>
+                    <span class="text-gray-400 text-xs">5 days ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-12 h-12 rounded bg-cover bg-center mr-3 flex-shrink-0"
+                  style="background-image: url('https://readdy.ai/api/search-image?query=PC%20hardware%20icon%2C%20computer%20parts%2C%20simple%2C%20clean&width=100&height=100&seq=37&orientation=squarish')"
+                ></div>
+                <div>
+                  <h4 class="text-white font-medium">
+                    Budget Gaming PC Build Guide 2025
+                  </h4>
+                  <div class="flex items-center mt-1">
+                    <div
+                      class="w-5 h-5 rounded-full bg-cover bg-center mr-1"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=gaming%20profile%20avatar%2C%20tech%20style%2C%20digital%20art%2C%20detailed%20face%2C%20different%20from%20all%20previous&width=100&height=100&seq=38&orientation=squarish')"
+                    ></div>
+                    <span class="text-gray-400 text-xs">TechGuru</span>
+                    <span class="text-gray-500 text-xs mx-2">•</span>
+                    <span class="text-gray-400 text-xs">1 week ago</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div
+                  class="w-12 h-12 rounded bg-cover bg-center mr-3 flex-shrink-0"
+                  style="background-image: url('https://readdy.ai/api/search-image?query=Valorant%20game%20icon%2C%20simple%2C%20clean&width=100&height=100&seq=39&orientation=squarish')"
+                ></div>
+                <div>
+                  <h4 class="text-white font-medium">
+                    Valorant: Advanced Aim Training Tips
+                  </h4>
+                  <div class="flex items-center mt-1">
+                    <div
+                      class="w-5 h-5 rounded-full bg-cover bg-center mr-1"
+                      style="background-image: url('https://readdy.ai/api/search-image?query=gaming%20profile%20avatar%2C%20esports%20style%2C%20digital%20art%2C%20detailed%20face%2C%20different%20from%20all%20previous&width=100&height=100&seq=40&orientation=squarish')"
+                    ></div>
+                    <span class="text-gray-400 text-xs">HeadshotPro</span>
+                    <span class="text-gray-500 text-xs mx-2">•</span>
+                    <span class="text-gray-400 text-xs">2 weeks ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button
+              class="w-full bg-gray-700 hover:bg-gray-600 text-white mt-6 py-3 rounded-button font-medium transition-all whitespace-nowrap"
+            >
+              Browse All Guides
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Gaming Performance Chart -->
+    <section class="py-16 bg-[#0f1116]">
+      <div class="container mx-auto px-4">
+        <div class="bg-gray-800 rounded-lg p-8">
+          <div
+            class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8"
+          >
+            <div>
+              <h2 class="text-3xl font-bold text-white mb-2">
+                Game Performance Benchmarks
+              </h2>
+              <p class="text-gray-400">
+                Compare FPS across different hardware configurations
+              </p>
+            </div>
+            <div class="flex space-x-4 mt-4 md:mt-0">
+              <button
+                class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-button text-sm font-medium transition-all whitespace-nowrap"
+              >
+                1080p
+              </button>
+              <button
+                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-button text-sm font-medium transition-all whitespace-nowrap"
+              >
+                1440p
+              </button>
+              <button
+                class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-button text-sm font-medium transition-all whitespace-nowrap"
+              >
+                4K
+              </button>
+            </div>
+          </div>
+          <div class="h-[400px]" id="performanceChart"></div>
+        </div>
+      </div>
+    </section>
+    <!-- Game Installation Guide -->
+    <section class="py-16 bg-[#0a0c10]">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white mb-10">
+          Game Installation Guides
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Guide Steps -->
+          <div class="bg-gray-800 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-white mb-6">
+              How to Install and Optimize PC Games
+            </h3>
+            <div class="space-y-6">
+              <div class="flex">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-primary rounded-full mr-4 flex-shrink-0"
+                >
+                  <span class="text-white font-bold">1</span>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-white mb-2">
+                    Choose the Right Platform
+                  </h4>
+                  <p class="text-gray-300">
+                    Select your preferred gaming platform (Steam, Epic Games,
+                    GOG, etc.) and create an account if you don't have one
+                    already.
+                  </p>
+                </div>
+              </div>
+              <div class="flex">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-primary rounded-full mr-4 flex-shrink-0"
+                >
+                  <span class="text-white font-bold">2</span>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-white mb-2">
+                    Download the Launcher
+                  </h4>
+                  <p class="text-gray-300">
+                    Download and install the platform's launcher application
+                    from the official website.
+                  </p>
+                </div>
+              </div>
+              <div class="flex">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-primary rounded-full mr-4 flex-shrink-0"
+                >
+                  <span class="text-white font-bold">3</span>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-white mb-2">
+                    Purchase or Add the Game
+                  </h4>
+                  <p class="text-gray-300">
+                    Purchase the game through the launcher or activate a game
+                    key if you already own it.
+                  </p>
+                </div>
+              </div>
+              <div class="flex">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-primary rounded-full mr-4 flex-shrink-0"
+                >
+                  <span class="text-white font-bold">4</span>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-white mb-2">
+                    Choose Installation Location
+                  </h4>
+                  <p class="text-gray-300">
+                    Select an installation folder, preferably on an SSD for
+                    faster loading times.
+                  </p>
+                </div>
+              </div>
+              <div class="flex">
+                <div
+                  class="w-10 h-10 flex items-center justify-center bg-primary rounded-full mr-4 flex-shrink-0"
+                >
+                  <span class="text-white font-bold">5</span>
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold text-white mb-2">
+                    Optimize Game Settings
+                  </h4>
+                  <p class="text-gray-300">
+                    Adjust in-game settings based on your hardware capabilities
+                    for the best performance and visual quality balance.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <button
+              class="w-full bg-primary hover:bg-opacity-90 text-white mt-8 py-3 rounded-button font-medium transition-all whitespace-nowrap"
+            >
+              View Detailed Guide
+            </button>
+          </div>
+          <!-- Troubleshooting -->
+          <div class="bg-gray-800 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-white mb-6">
+              Common Installation Issues
+            </h3>
+            <div class="space-y-6">
+              <div class="bg-gray-700 rounded-lg p-4">
+                <h4 class="text-lg font-bold text-white mb-2">
+                  Download Stuck or Slow
+                </h4>
+                <p class="text-gray-300 mb-3">
+                  If your download is stuck or extremely slow, try these
+                  solutions:
+                </p>
+                <ul class="list-disc pl-5 text-gray-300 space-y-1">
+                  <li>Restart the launcher application</li>
+                  <li>Check your internet connection</li>
+                  <li>Temporarily disable your firewall/antivirus</li>
+                  <li>Clear the download cache in launcher settings</li>
+                </ul>
+              </div>
+              <div class="bg-gray-700 rounded-lg p-4">
+                <h4 class="text-lg font-bold text-white mb-2">
+                  Installation Errors
+                </h4>
+                <p class="text-gray-300 mb-3">
+                  For installation errors or failed installations:
+                </p>
+                <ul class="list-disc pl-5 text-gray-300 space-y-1">
+                  <li>Verify you have enough disk space</li>
+                  <li>Run the launcher as administrator</li>
+                  <li>Check for Windows updates</li>
+                  <li>Update your graphics drivers</li>
+                </ul>
+              </div>
+              <div class="bg-gray-700 rounded-lg p-4">
+                <h4 class="text-lg font-bold text-white mb-2">
+                  Game Won't Launch
+                </h4>
+                <p class="text-gray-300 mb-3">
+                  If the game installs but won't start:
+                </p>
+                <ul class="list-disc pl-5 text-gray-300 space-y-1">
+                  <li>Verify game files integrity through the launcher</li>
+                  <li>Check if your PC meets minimum requirements</li>
+                  <li>Update DirectX, Visual C++ Redistributables</li>
+                  <li>Disable overlays (Discord, Steam, etc.)</li>
+                </ul>
+              </div>
+            </div>
+            <div class="mt-8 flex space-x-4">
+              <button
+                class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Driver Updates
+              </button>
+              <button
+                class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-3 rounded-button font-medium transition-all whitespace-nowrap"
+              >
+                Mod Guides
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Newsletter -->
+    <section
+      class="py-16 bg-[#0f1116]"
+      style="background-image: url('https://readdy.ai/api/search-image?query=abstract%20gaming%20background%2C%20dark%20theme%20with%20subtle%20purple%20and%20blue%20neon%20elements%2C%20digital%2C%20futuristic%2C%20minimal%2C%20perfect%20for%20newsletter%20section&width=1920&height=400&seq=41&orientation=landscape'); background-size: cover; background-position: center;"
+    >
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-white mb-4">
+            Stay Updated with Gaming News
+          </h2>
+          <p class="text-gray-300 mb-8">
+            Subscribe to our newsletter to receive the latest gaming news,
+            exclusive deals, and early access to guides.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+            <input
+              type="email"
+              placeholder="Your email address"
+              class="flex-1 bg-gray-800 bg-opacity-80 text-white px-4 py-3 rounded-lg border-none"
+            />
+            <button
+              class="bg-primary hover:bg-opacity-90 text-white px-6 py-3 rounded-button font-semibold transition-all whitespace-nowrap"
+            >
+              Subscribe
+            </button>
+          </div>
+          <div class="mt-4 text-gray-400 text-sm">
+            By subscribing, you agree to our Privacy Policy and Terms of
+            Service.
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-[#0a0c10] pt-16 pb-8">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+          <div class="lg:col-span-2">
+            <h1 class="text-3xl font-['Pacifico'] text-primary mb-4">logo</h1>
+            <p class="text-gray-400 mb-6">
+              Your ultimate destination for PC gaming news, reviews, guides, and
+              community. Discover the latest games, optimize your setup, and
+              connect with fellow gamers.
+            </p>
+            <div class="flex space-x-4">
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-discord-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-twitter-x-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-youtube-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-twitch-fill text-gray-300"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700"
+              >
+                <i class="ri-instagram-fill text-gray-300"></i>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-4">Navigation</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">Home</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">Games</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">News</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">Reviews</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">Guides</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Community</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-4">Categories</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >FPS Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >RPG Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Strategy Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Open World Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Simulation Games</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >MOBA Games</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-white font-bold mb-4">Support</h3>
+            <ul class="space-y-2">
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Contact Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary">FAQ</a>
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Terms of Service</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Refund Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="text-gray-400 hover:text-primary"
+                  >Cookie Settings</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8">
+          <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="text-gray-500 mb-4 md:mb-0">
+              © 2025 NexusGaming. All rights reserved.
+            </div>
+            <div class="flex space-x-6">
+              <div class="flex items-center">
+                <i class="ri-visa-fill text-gray-400 text-xl mr-2"></i>
+                <i class="ri-mastercard-fill text-gray-400 text-xl mr-2"></i>
+                <i class="ri-paypal-fill text-gray-400 text-xl mr-2"></i>
+                <i class="ri-apple-fill text-gray-400 text-xl"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize performance chart
+        const chartDom = document.getElementById("performanceChart");
+        const myChart = echarts.init(chartDom);
+        const option = {
+          animation: false,
+          tooltip: {
+            trigger: "axis",
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            textStyle: {
+              color: "#1f2937",
+            },
+          },
+          legend: {
+            data: ["RTX 4090", "RTX 4080", "RTX 3080", "RX 7900 XTX"],
+            textStyle: {
+              color: "#e2e8f0",
+            },
+            top: 0,
+          },
+          grid: {
+            left: "3%",
+            right: "4%",
+            bottom: "3%",
+            top: "40px",
+            containLabel: true,
+          },
+          xAxis: {
+            type: "category",
+            data: [
+              "Cyberpunk 2077",
+              "Elden Ring",
+              "Red Dead Redemption 2",
+              "Call of Duty: MW III",
+              "Counter-Strike 2",
+            ],
+            axisLine: {
+              lineStyle: {
+                color: "#4b5563",
+              },
+            },
+            axisLabel: {
+              color: "#e2e8f0",
+              rotate: 30,
+            },
+          },
+          yAxis: {
+            type: "value",
+            name: "FPS",
+            nameTextStyle: {
+              color: "#e2e8f0",
+            },
+            axisLine: {
+              lineStyle: {
+                color: "#4b5563",
+              },
+            },
+            axisLabel: {
+              color: "#e2e8f0",
+            },
+            splitLine: {
+              lineStyle: {
+                color: "#374151",
+              },
+            },
+          },
+          series: [
+            {
+              name: "RTX 4090",
+              type: "bar",
+              data: [118, 145, 132, 165, 280],
+              itemStyle: {
+                color: "rgba(87, 181, 231, 1)",
+              },
+              emphasis: {
+                itemStyle: {
+                  color: "rgba(87, 181, 231, 0.8)",
+                },
+              },
+              barWidth: "15px",
+              barGap: "10%",
+              barCategoryGap: "20%",
+            },
+            {
+              name: "RTX 4080",
+              type: "bar",
+              data: [95, 120, 110, 140, 240],
+              itemStyle: {
+                color: "rgba(141, 211, 199, 1)",
+              },
+              emphasis: {
+                itemStyle: {
+                  color: "rgba(141, 211, 199, 0.8)",
+                },
+              },
+              barWidth: "15px",
+            },
+            {
+              name: "RTX 3080",
+              type: "bar",
+              data: [75, 95, 85, 110, 190],
+              itemStyle: {
+                color: "rgba(251, 191, 114, 1)",
+              },
+              emphasis: {
+                itemStyle: {
+                  color: "rgba(251, 191, 114, 0.8)",
+                },
+              },
+              barWidth: "15px",
+            },
+            {
+              name: "RX 7900 XTX",
+              type: "bar",
+              data: [90, 110, 100, 125, 210],
+              itemStyle: {
+                color: "rgba(252, 141, 98, 1)",
+              },
+              emphasis: {
+                itemStyle: {
+                  color: "rgba(252, 141, 98, 0.8)",
+                },
+              },
+              barWidth: "15px",
+            },
+          ],
+        };
+        myChart.setOption(option);
+        // Responsive chart resize
+        window.addEventListener("resize", function () {
+          myChart.resize();
+        });
+        // Custom checkbox functionality
+        const checkboxes = document.querySelectorAll(".custom-checkbox input");
+        checkboxes.forEach((checkbox) => {
+          checkbox.addEventListener("change", function () {
+            // Custom checkbox logic here
+          });
+        });
+        // Custom radio functionality
+        const radios = document.querySelectorAll(".custom-radio input");
+        radios.forEach((radio) => {
+          radio.addEventListener("change", function () {
+            // Custom radio logic here
+          });
+        });
+        // Custom switch functionality
+        const switches = document.querySelectorAll(".custom-switch input");
+        switches.forEach((switchEl) => {
+          switchEl.addEventListener("change", function () {
+            // Custom switch logic here
+          });
+        });
+        // Custom range slider functionality
+        const ranges = document.querySelectorAll(".custom-range");
+        ranges.forEach((range) => {
+          range.addEventListener("input", function () {
+            // Custom range logic here
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
